@@ -1,0 +1,25 @@
+/* Global variable definition */
+:root {
+  --spacing-huge: 8rem;
+  --spacing-large: 4rem;
+  --spacing: 2rem;
+  --spacing-small: 1rem;
+  --spacing-tiny: .5rem;
+
+  --transition: .2s;
+  --transition-long: .5s;
+
+  --color-main: #5678d4;
+  --gradientStart: #373f47;
+  --gradientEnd: #708cca;
+}
+
+@keyframes rotate-plane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  } 50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+  } 100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
