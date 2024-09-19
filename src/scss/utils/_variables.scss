@@ -9,9 +9,26 @@
   --transition: .2s;
   --transition-long: .5s;
 
-  --color-main: #5678d4;
-  --gradientStart: #373f47;
-  --gradientEnd: #708cca;
+  --color-main: #758C78;
+  --color-main-darker: #556658;
+  --color-main-alpha: rgba(117, 140, 120, .75);
+
+  --color-alt-1: #b1c5a0;
+  --color-alt-1-darker: #909e83;
+
+  --color-alt-2: #cbe2d2;
+  --color-alt-2-darker: #99aa9e;
+
+  --color-bg: #FAFAFA;
+  --color-bg-darker: #DADADA;
+  --color-fg: #181818;
+}
+
+/* Define custom font */
+@font-face {
+  font-family: 'Tangerine';
+  src: url('../../assets/font/Tangerine_Regular.ttf') format('truetype'),
+    url('../../assets/font/Tangerine_Regular.woff') format('woff');
 }
 
 @keyframes rotate-plane {

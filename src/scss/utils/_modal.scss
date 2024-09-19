@@ -1,6 +1,6 @@
 .modal-overlay {
   align-items: center;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: var(--color-main-alpha);
   display: none;
   height: 100%;
   justify-content: center;
@@ -13,17 +13,17 @@
   transition: all .4s;
 
   .modal {
-    background: rgba(25, 25, 25, .95);
-    border-bottom: solid 5px var(--color-main);
-    border-top: solid 5px var(--color-main);
+    background: linear-gradient(240deg, var(--color-bg) 0%, var(--color-bg-darker) 100%);
+    border-bottom: solid 5px var(--color-alt-1);
+    border-top: solid 5px var(--color-alt-1);
     border-radius: .5rem;
-    box-shadow: 0 0 .5rem rgba(255, 255, 255, .3);
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, .15);
     padding: 3rem;
     position: relative;
 
     p.close-modal {
       cursor: pointer;
-      color: white;
+      color: var(--color-fg);
       font-size: 4rem;
       margin: 0;
       position: absolute;
@@ -45,10 +45,23 @@
     }
 
     button {
+      background-color: var(--color-bg);
+      border: solid 1px rgba(0, 0, 0, .2);
+      border-radius: .5rem;
+      cursor: pointer;
       display: block;
       margin-left: auto;
       margin-right: auto;
       margin-top: var(--spacing);
+      padding: var(--spacing-small) var(--spacing);
+
+      transition: all var(--transition);
+
+      &:active,
+      &:focus,
+      &:hover {
+        background-color: var(--color-alt-2);
+      }
     }
     /* Modal custom definitions */
     &.modal-info {
@@ -65,109 +78,125 @@
       }
     
       a {
+        color: var(--color-main);
         display: inline-block;
         margin: 0;
         text-indent: 0;
+
+        transition: all var(--transition);
+
+        &:active,
+        &:focus,
+        &:hover {
+          color: var(--color-alt-1);          
+        }
       }
     }
 
-    &.modal-release {
-      height: auto;
-      max-height: 90%;
-      max-width: 90%;
+    &.modal-slideshow {
+      height: 100%;
+      max-height: calc(100% - var(--spacing-large));
+      max-width: calc(100% - var(--spacing-large));
       width: 100%;
 
-      .modal-content {
-        display: block;
-        /* Substract button height and title height */
-        height: auto;
+      p.close-modal {
+        font-size: 3rem;
       }
 
-      .release-wrapper {
+      .image-wrapper {
         align-items: center;
-        display: grid;
-        grid-template-columns: 2fr 3fr;
-        height: 80%;
-        padding: var(--spacing-tiny) 0;
-        width: calc(100% - var(--default-scroll-size));
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        position: relative;
 
-        .release-cover {
-          border-radius: .5rem;
-          box-shadow: 0 0 .5rem rgba(255, 255, 255, .3);
-          margin-left: auto;
-          margin-right: auto;
+        img {
+          box-shadow: 0 0 5px 5px rgba(0, 0, 0, .15);
+          max-height: 100%;
+          max-width: 100%;
+
+          &:active + .slide-selector,
+          &:focus + .slide-selector,
+          &:hover + .slide-selector {
+            opacity: 1 !important; /* Force important to override manual Js opacity set */
+          }
         }
 
-        .release-container {
-          margin-left: var(--spacing-large);
+        .previous, .next {
+          align-items: center;
+          cursor: pointer;
+          display: flex;
+          font-size: 3rem;
+          font-weight: bold;
+          height: 100%;
+          justify-content: center;
+          position: absolute;
+          opacity: .66;
+          top: 0;
+          user-select: none;
+          width: 4rem;
+        }
 
-          .release-info {
-            border-bottom: solid 1px var(--color-main);
-            padding: var(--spacing-large) 0;
+        .previous {
+          left: 0;
 
-            h2 {
-              margin-bottom: var(--spacing-tiny);
-            }
+          &:active,
+          &:focus,
+          &:hover {
+            opacity: 1;
+          }
+        }
 
-            h3 {
-              text-indent: var(--spacing);
-              margin-bottom: var(--spacing);
+        .next {
+          right: 0;
 
-              a {
-                display: inline;
-                color: inherit;
-                font-size: inherit;
-                font-style: italic;
-                text-decoration: none;
-  
-                transition: all var(--transition);
-  
-                &:active,
-                &:focus,
-                &:hover {
-                  color: var(--color-main)
-                }
-              }              
-            }
+          &:active,
+          &:focus,
+          &:hover {
+            opacity: 1;
+          }
+        }
 
-            p {
-              text-align: right;
-            }
+        .slide-selector {
+          bottom: 0;
+          display: flex;
+          height: 3rem;
+          justify-content: center;
+          margin: .7rem 0;
+          opacity: .3;
+          position: absolute;
+          user-select: none;
+          width: 100%;
+
+          transition: all var(--transition);
+
+          &:active,
+          &:focus,
+          &:hover {
+            opacity: 1 !important; /* Force important to override manual Js opacity set */
           }
 
-          .release-links {
-            display: grid;
-            grid-gap: var(--spacing-small);
-            grid-template-columns: repeat(auto-fill, 20rem);
-            justify-content: space-around;
-            padding: var(--spacing-large) 0;
+          .selector {
+            background-color: var(--color-main);
+            border-radius: 50%;
+            box-shadow: 0 0 3px 2px rgba(0, 0, 0, .55);
+            cursor: pointer;
+            height: 1.6rem;
+            margin: 0 .35rem;
+            user-select: none;
+            width: 1.6rem;
 
-            .link {
-              align-items: center;
-              border: solid 1px #D4D4D4;
-              border-radius: .5rem;
-              color: inherit;
-              display: flex;
-              padding: var(--spacing-tiny) var(--spacing-small);
-              text-decoration: none;
+            transition: all var(--transition);
 
-              transition: all var(--transition);
+            &:active,
+            &:focus,
+            &:hover {
+              background-color: var(--color-alt-2);
+            }
 
-              &:active,
-              &:focus,
-              &:hover {
-                background-color: rgba(255, 255, 255, .3);
-              }
-
-              img {
-                box-shadow: 0 0 .5rem rgba(255, 255, 255, .3);
-                height: 2.4rem;
-                margin: 0 var(--spacing-small);
-              }
-
-              p {
-                font-weight: bold;
-              }
+            &.selected {
+              background-color: var(--color-alt-1);
+              box-shadow: 0 0 3px 2px var(--color-main-alpha);
             }
           }
         }

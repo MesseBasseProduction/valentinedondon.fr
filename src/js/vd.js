@@ -36,6 +36,14 @@ class vd {
   _events() {
     // Blur modal event
     document.getElementById('modal-overlay').addEventListener('click', this._closeModal.bind(this));
+    document.getElementById('nav-about').addEventListener('click', this._scrollToView.bind(this));
+    document.getElementById('nav-book').addEventListener('click', this._scrollToView.bind(this));
+    document.getElementById('nav-contact').addEventListener('click', this._scrollToView.bind(this));
+
+    const photos = document.querySelector('#gallery').children;
+    for (let i = 0; i < photos.length; ++i) {
+      photos[i].addEventListener('click', this._slideshowModal.bind(this, i));
+    }
   }
 
 
@@ -45,9 +53,10 @@ class vd {
       setTimeout(() => {
         document.querySelector('#loading-overlay').style.display = 'none';
         this._mainScroll = new window.ScrollBar({
-          target: document.body,
+          target: document.querySelector('#page-content'),
+          minSize: 200,
           style: {
-            color: 'white'
+            color: '#758C78'
           }
         });
         // Force raf after scroll creation to make scrollbar properly visible
@@ -56,6 +65,18 @@ class vd {
           resolve();
         });
       }, 400);
+    });
+  }
+
+
+  // Event callback
+
+
+  _scrollToView(e) {
+    const target = e.target.id.split('-')[1];
+    document.getElementById(target).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
     });
   }
 
@@ -70,6 +91,59 @@ class vd {
       overlay.style.display = 'flex';
       data.text().then(htmlString => {
         const container = document.createRange().createContextualFragment(htmlString);
+        overlay.appendChild(container);
+        setTimeout(() => overlay.style.opacity = 1, 50);
+      });
+    }).catch(e => console.error(e));
+  }
+
+
+  _slideshowModal(index) {
+    const overlay = document.getElementById('modal-overlay');
+    const photos = document.querySelector('#gallery').children;
+    fetch(`assets/html/slideshowmodal.html`).then(data => {
+      overlay.style.display = 'flex';
+      data.text().then(htmlString => {
+        const container = document.createRange().createContextualFragment(htmlString);
+        container.querySelector('#slideshow-image').src = photos[index].src;
+        // Internal method to update curently selected photo
+        let currentIndex = index;
+        const updateSelection = newIndex => {
+          const selectors = overlay.querySelector('#slide-selector').children;
+          for (let i = 0; i < selectors.length; ++i) {
+            selectors[i].classList.remove('selected');
+            if (i === newIndex) {
+              selectors[i].classList.add('selected');
+            }
+          }
+          overlay.querySelector('#slideshow-image').src = photos[newIndex].src;
+          overlay.querySelector('#slideshow-image').className = photos[newIndex].className;
+          currentIndex = newIndex;
+          overlay.querySelector('#slide-selector').style.opacity = 1;
+          setTimeout(() => {
+            overlay.querySelector('#slide-selector').style.opacity = .3;            
+          }, 1000)
+        };
+        // Iterate over photos to create slide selectors and make them interactive
+        for (let i = 0; i < photos.length; ++i) {
+          const selector = document.createElement('DIV');
+          selector.classList.add('selector');
+          if (i === index) {
+            selector.classList.add('selected');
+          }
+          selector.addEventListener('click', updateSelection.bind(this, i));
+          container.querySelector('#slide-selector').appendChild(selector);
+        }
+        // Handle next and previous buttons
+        container.querySelector('#previous').addEventListener('click', () => {
+          currentIndex = (((currentIndex - 1) % photos.length) + photos.length) % photos.length;
+          updateSelection(currentIndex);
+        });
+        container.querySelector('#next').addEventListener('click', () => {
+          currentIndex = (currentIndex + 1) % photos.length;
+          updateSelection(currentIndex);
+        });
+        // Then creating the modal
         overlay.appendChild(container);
         setTimeout(() => overlay.style.opacity = 1, 50);
       });

@@ -6,7 +6,8 @@
   "main": "src/vd.js",
   "scripts": {
     "build": "webpack --config webpack/webpack.prod.js",
-    "watch": "webpack --watch --config webpack/webpack.dev.js"
+    "watch": "webpack --watch --config webpack/webpack.dev.js",
+    "start": "node src/js/server.js"
   },
   "homepage": "https://github.com/MesseBasseProduction/valentinedondon.fr/README.md",
   "repository": {
