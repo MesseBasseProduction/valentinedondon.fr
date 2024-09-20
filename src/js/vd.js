@@ -40,6 +40,8 @@ class vd {
     document.getElementById('nav-book').addEventListener('click', this._scrollToView.bind(this));
     document.getElementById('nav-contact').addEventListener('click', this._scrollToView.bind(this));
 
+    document.getElementById('bw-switch').addEventListener('click', this._switchPhotosBW.bind(this));
+
     const photos = document.querySelector('#gallery').children;
     for (let i = 0; i < photos.length; ++i) {
       photos[i].addEventListener('click', this._slideshowModal.bind(this, i));
@@ -81,6 +83,19 @@ class vd {
   }
 
 
+  _switchPhotosBW(e) {
+    const imageSrc = ['vd5', 'vd2', 'vd1', 'vd3', 'vd7', 'vd4', 'vd6', 'vd8', 'vd9', 'vd11', 'vd10'];
+    const photos = document.querySelector('#gallery').children;
+    for (let i = 0; i < photos.length; ++i) {
+      if (e.target.checked === true) {
+        photos[i].src = `./assets/img/photos/${imageSrc[i]}-nb.webp`;
+      } else {
+        photos[i].src = `./assets/img/photos/${imageSrc[i]}.webp`;
+      }
+    }
+  }
+
+
   // Modal related methods
 
 
@@ -108,6 +123,7 @@ class vd {
         container.querySelector('#slideshow-image').src = photos[index].src;
         // Internal method to update curently selected photo
         let currentIndex = index;
+        let timeoutId = -1;
         const updateSelection = newIndex => {
           const selectors = overlay.querySelector('#slide-selector').children;
           for (let i = 0; i < selectors.length; ++i) {
@@ -120,9 +136,10 @@ class vd {
           overlay.querySelector('#slideshow-image').className = photos[newIndex].className;
           currentIndex = newIndex;
           overlay.querySelector('#slide-selector').style.opacity = 1;
-          setTimeout(() => {
+          clearTimeout(timeoutId);
+          timeoutId = setTimeout(() => {
             overlay.querySelector('#slide-selector').style.opacity = .3;            
-          }, 1000)
+          }, 1000);
         };
         // Iterate over photos to create slide selectors and make them interactive
         for (let i = 0; i < photos.length; ++i) {

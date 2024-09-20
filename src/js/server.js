@@ -21,14 +21,13 @@ app.use('/assets', express.static(path.join(__dirname, '../../assets'), { // Ser
 
 // Page urls
 app.get('/',  (req, res) => {
-console.log(`${(new Date()).toISOString()} | valentinedondon.fr v${version} | 200 ${req.originalUrl} page requested, return biography.html`);
+console.log(`${(new Date()).toISOString()} | valentinedondon.fr v${version} | 200 ${req.originalUrl} page requested, return index.html`);
 res.sendFile(path.join(__dirname, '../../assets/html/index.html'));
 });
-
-// 404
+// Send / for all urls, avoid 404
 app.use((req, res) => {
-  console.log(`${(new Date()).toISOString()} | valentinedondon.fr v${version} | 404 ${req.originalUrl} page requested`);
-  res.status(404).sendFile(path.join(__dirname, '../../assets/html/404.html'));
+  console.log(`${(new Date()).toISOString()} | valentinedondon.fr v${version} | 404 ${req.originalUrl} page requested, return index.html`);
+  res.sendFile(path.join(__dirname, '../../assets/html/index.html'));
 });
 
 // Start server console

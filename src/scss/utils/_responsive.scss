@@ -1,7 +1,9 @@
-@media (max-width: 1000px) {
-  .todo {
-    display: block;
-  }  
+@media (max-width: 1200px) {
+  main {
+    section.about {
+      padding: var(--spacing-large) 15%;
+    }
+  }
 }
 
 @media (max-width: 870px) {
