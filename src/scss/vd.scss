@@ -174,6 +174,7 @@ main {
       color: var(--color-main-darker);
       font-size: 2.6rem;
       font-style: italic;
+      margin-bottom: var(--spacing);
       text-decoration: none;
 
       transition: all var(--transition);
@@ -182,18 +183,6 @@ main {
       &:focus,
       &:hover {
         color: var(--color-main);
-      }
-    }
-    
-    .socials-container {
-      margin: var(--spacing) 0;
-      user-select: none;
-
-      a {
-        img {
-          user-select: none;
-          width: 5rem;
-        }
       }
     }
 
