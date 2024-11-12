@@ -167,6 +167,8 @@ main {
   section.contact {
     background: linear-gradient(300deg, var(--color-alt-2) 0%, var(--color-main) 100%);
     border-bottom: solid 5px var(--color-main);
+    display: flex;
+    flex-direction: column;
     padding: var(--spacing-large) 33%;
     text-align: center;
 
