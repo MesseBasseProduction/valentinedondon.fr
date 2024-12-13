@@ -1,6 +1,5 @@
-version: "3"
 services:
-  guillaumebeaulieu.com:
+  valentinedondon.fr:
     container_name: valentinedondon.fr_node
     build: .
     command: npm run start
