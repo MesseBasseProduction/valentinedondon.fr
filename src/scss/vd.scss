@@ -188,7 +188,7 @@ main {
       }
     }
 
-    span {
+    p:last-of-type {
       color: var(--color-main-darker);
       cursor: pointer;
       font-style: italic;
